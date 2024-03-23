@@ -10,9 +10,11 @@ jobs:
   terraform:
     name: 'Deploy Terraform to Azure'
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        shell: bash
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     # New section to try to fix auth issue
 #    - name: Login to Azure
 #      uses: azure/login@v1
@@ -22,11 +24,15 @@ jobs:
     - name: 'Setup Terraform'
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: 1.7.5
+#        terraform_version: 1.7.5
         cli_config_credentials_token: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: 'Terraform Init'
       run: terraform init
+
+    # Checks that all Terraform configuration files adhere to a canonical format
+    - name: Terraform Format
+      run: terraform fmt -check
 
     - name: 'Terraform Plan'
       run: terraform plan
