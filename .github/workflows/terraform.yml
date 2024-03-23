@@ -1,35 +1,49 @@
-name: 'Terraform CI/CD'
-
+name: "Terraform Deploy"
 on:
   push:
     branches:
       - main
-  pull_request:
+
+# Update secrets TF_VAR_agent_client_id, TF_VAR_agent_client_secret, TF_VAR_subscription_id, TF_VAR_tenant_id in the GitHub repository. 
+# For steps to create and store secrets, please check https://docs.github.com/en/actions/configuring-and-managing-workflows/creating-and-storing-encrypted-secrets
 
 jobs:
   terraform:
-    name: 'Deploy Terraform to Azure'
+    name: "Terraform"
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
+      - name: "Checkout"
+        uses: actions/checkout@master
 
-    - name: 'Setup Terraform'
-      uses: hashicorp/setup-terraform@v1
-      with:
-        terraform_version: 1.7.5
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
 
-    - name: 'Terraform Init'
-      run: terraform init
+      - name: "Terraform Format"
+        id: fmt
+        run: terraform fmt
 
-    - name: 'Terraform Plan'
-      run: terraform plan
+      - name: "Terraform Init"
+        id: init
+        run: terraform init
 
-    - name: 'Terraform Apply'
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve
-      env:
-        ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-        ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-        ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      - name: "Terraform Validate"
+        id: validate
+        run: terraform validate -no-color
+
+      - name: "Terraform Plan"
+        id: plan
+        run: terraform plan -no-color
+        env:
+          TF_VAR_agent_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+          TF_VAR_agent_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          TF_VAR_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          TF_VAR_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+
+      - name: "Terraform Apply"
+        id: apply
+        run: terraform apply
+        env:
+          TF_VAR_agent_client_id: ${{ secrets.AZURE_CLIENT_ID }}
+          TF_VAR_agent_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          TF_VAR_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          TF_VAR_tenant_id: ${{ secrets.TAZURE_TENANT_ID }}
