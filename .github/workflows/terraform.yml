@@ -14,10 +14,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     # New section to try to fix auth issue
-    - name: Login to Azure
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+#    - name: Login to Azure
+#      uses: azure/login@v1
+#      with:
+#        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: 'Setup Terraform'
       uses: hashicorp/setup-terraform@v1
