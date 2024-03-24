@@ -18,6 +18,7 @@ provider "azurerm" {
   features {}
 }
 
+# Create resource group
 resource "azurerm_resource_group" "rg" {
   name     = "dev-rgp-cis-neubank-use-001"
   location = "East US"
