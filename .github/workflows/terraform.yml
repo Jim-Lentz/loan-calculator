@@ -41,7 +41,7 @@ jobs:
         echo "ARM_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}" >> $GITHUB_ENV
 
     - name: 'Terraform Init'
-      run: terraform init -backend-config=key=$prod-terraform.tfstate
+      run: terraform init -backend-config=key=prod-terraform.tfstate
 
     # Checks that all Terraform configuration files adhere to a canonical format
 #    - name: Terraform Format
