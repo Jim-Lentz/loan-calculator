@@ -51,7 +51,7 @@ jobs:
       run: terraform plan -var-file="dev.tfvars"
 
     - name: 'Terraform Apply'
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      if: github.ref == 'refs/heads/dev' && github.event_name == 'push'
       run: terraform apply -var-file="dev.tfvars" -auto-approve
       env:
         ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
