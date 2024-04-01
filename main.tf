@@ -5,13 +5,14 @@
       version = "~>3.0"
     }
   }
+
+#Backend is set on the command line
     backend "azurerm" {
       resource_group_name  = "tfstate"
       storage_account_name = "tfstateyyrxc"
       container_name       = "tfstate"
-      key                  = "terraform.tfstate"
+#      key                  = "$dev-terraform.tfstate"
   }
-
 }
 
 provider "azurerm" {
@@ -20,11 +21,11 @@ provider "azurerm" {
 
 # Create resource group
 resource "azurerm_resource_group" "rg" {
-  name     = "dev-rgp-cis-neubank-use-003"
-  location = "East US"
+  name     = "${var.environment}-${var.resource_group_name}"
+  location = var.location
 
   tags = {
-    Environment = "Dev"
+    Environment = var.environment
     Owner = "first.last@company.com"
     Project = "Mortgage Calculator"
   }

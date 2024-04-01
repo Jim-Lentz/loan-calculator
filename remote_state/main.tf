@@ -30,8 +30,9 @@ resource "azurerm_storage_account" "tfstate" {
   account_replication_type = "LRS"
   allow_nested_items_to_be_public = false
 
-  tags = {
-    environment = "staging"
+    tags = {
+    Owner = "first.last@company.com"
+    Project = "Mortgage Calculator"
   }
 }
 
