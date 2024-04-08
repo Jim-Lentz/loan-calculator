@@ -31,7 +31,7 @@ resource "azurerm_resource_group" "rg" {
   }
 }
 
-
+/*
 ##### testing checkov
 
 resource "azurerm_virtual_network" "vnet" {
@@ -54,7 +54,7 @@ resource "azurerm_subnet" "front-end-subnet" {
   virtual_network_name = azurerm_virtual_network.vnet.name
   address_prefixes     = ["10.0.0.0/26"]
   service_endpoints = ["Microsoft.Web"]
-/*
+
   delegation {
     name = "delegation"
 
@@ -62,7 +62,7 @@ resource "azurerm_subnet" "front-end-subnet" {
       name    = "Microsoft.Web/serverFarms"
       actions = ["Microsoft.Network/virtualNetworks/subnets/action","Microsoft.Network/virtualNetworks/subnets/join/action", "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action"]
     }
-  } */
+  } 
 
   lifecycle {
     ignore_changes = [
@@ -135,3 +135,4 @@ resource "azurerm_subnet_network_security_group_association" "backend" {
   subnet_id                 = azurerm_subnet.back-end-subnet.id
   network_security_group_id = azurerm_network_security_group.backend_nsg.id
 }
+*/
