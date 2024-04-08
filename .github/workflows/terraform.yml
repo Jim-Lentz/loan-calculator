@@ -55,7 +55,8 @@ jobs:
 
     # Run Checkov against configuration
     - name: Checkov
-      if: github.event_name == 'pull_request'
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      # if: github.event_name == 'pull_request'
       id: checkov
       uses: bridgecrewio/checkov-action@master
       with:
