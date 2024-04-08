@@ -130,3 +130,8 @@ resource "azurerm_network_security_rule" "allow_api" {
   resource_group_name         = "${var.environment}-${var.resource_group_name}"
   network_security_group_name = azurerm_network_security_group.backend_nsg.name
 }
+
+resource "azurerm_subnet_network_security_group_association" "backend" {
+  subnet_id                 = azurerm_subnet.back-end-subnet
+  network_security_group_id = azurerm_network_security_group.backend_nsg.id
+}
