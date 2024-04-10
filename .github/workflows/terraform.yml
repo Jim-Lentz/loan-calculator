@@ -67,15 +67,8 @@ jobs:
     - name: 'Terraform Validate'
       run: terraform validate
 
-    #- name: 'Terraform Plan'
-    #  #run: terraform plan -var-file="./prod.tfvars"
-    #  run: terraform plan -var-file=./${{ github.ref == 'refs/heads/main' && 'prod' || (github.ref == 'refs/heads/test' && 'test' || 'dev') }}.tfvars
-    - name: 'Terraform Plan
-      run: |
-        var_file=./${{ github.ref == 'refs/heads/main' && 'prod' || (github.ref == 'refs/heads/test' && 'test' || 'dev') }}.tfvars
-        echo "var_file: $var_file"
-        terraform plan -var-file=$var_file
-
+    - name: 'Terraform Plan'
+      run: terraform plan -var-file=./${{ github.ref == 'refs/heads/main' && 'prod' || (github.ref == 'refs/heads/test' && 'test' || 'dev') }}.tfvars
 
     # Run Checkov against configuration
 #    - name: Checkov
