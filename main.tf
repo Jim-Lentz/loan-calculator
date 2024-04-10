@@ -27,7 +27,7 @@ resource "azurerm_resource_group" "rg" {
   tags = {
     Environment = var.environment
     Owner = "first.last@company.com"
-    Project = "Mortgage Calculator-test dev to test to main - Again"
+    Project = "Mortgage Calculator-test dev to test to main - Again Again :)"
   }
 }
 
